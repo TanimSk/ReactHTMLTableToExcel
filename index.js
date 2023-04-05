@@ -69,7 +69,16 @@ var ReactHTMLTableToExcel = function (_Component) {
         return null;
       }
 
-      var table = document.getElementById(this.props.table).outerHTML;
+      var table = document.getElementById(this.props.table);
+
+      Array.from(table.getElementsByTagName('td')).filter((s) => {
+        if (s.style.display == 'none') {
+          table.getElementsByTagName('tbody')[0].removeChild(s.parentNode);
+        }
+      });
+
+      table = table.outerHTML;
+
       var sheet = String(this.props.sheet);
       var filename = String(this.props.filename) + '.xls';
 
